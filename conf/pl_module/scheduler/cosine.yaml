@@ -1,0 +1,7 @@
+# Scheduler must be setup as a chained scheduler to allow for multiple schedulers with single config
+interval: step # Whether to step every epoch or step
+frequency: 1 # How many epochs/steps should pass between stepping
+schedulers:
+  - _target_: torch.optim.lr_scheduler.CosineAnnealingLR
+    T_max: null  # Will be set in training script as max epochs if null, can also set value in epochs > max_epochs in config if
+    eta_min: 1e-6

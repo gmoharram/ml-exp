@@ -1,0 +1,17 @@
+_target_: datasets._datamodule_wrapper.DataModuleWrapper
+name: dermamnist
+root_dir: ${oc.env:HOME}/datasets/
+download: false
+image_size: 224
+in_channels: 3
+num_classes: 7
+batch_size: 128
+accumulate_grad_batches: 1
+num_workers: 4
+persistent_workers: true
+pin_memory: true
+trainset_fraction: null
+valset_fraction: null
+transforms_cfg: # TODO: check transforms
+  defaults:
+    - _target_: torchvision.transforms.ToTensor

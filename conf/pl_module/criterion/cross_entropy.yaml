@@ -1,0 +1,4 @@
+# Loss Function Configuration
+_target_: torch.nn.CrossEntropyLoss
+weighted: false # If true, weights will be set dynamically based on class distribution
+label_smoothing: 0.0 

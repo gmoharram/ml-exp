@@ -1,0 +1,12 @@
+# Scheduler configuration for linear warmup followed by cosine decay
+interval: step # Whether to step every epoch or step
+frequency: 1 # How many epochs/steps should pass between stepping
+milestones: [5] # in epochs, switch to cosine scheduler after 5 epochs
+schedulers:
+  - _target_: torch.optim.lr_scheduler.LinearLR
+    start_factor: 0.3 # warmup if start_factor < end_factor
+    end_factor: 1.0
+    total_iters: 5 # in epochs
+  - _target_: torch.optim.lr_scheduler.CosineAnnealingLR
+    T_max: null # Will be set in training script as (max_epochs - warmup_epochs) if null, can also set value manually
+    eta_min: 1e-6

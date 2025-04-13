@@ -1,0 +1,20 @@
+_target_: datasets._datamodule_wrapper.DataModuleWrapper
+name: octmnist
+root_dir: ${oc.env:HOME}/datasets/
+download: false
+image_size: 224
+in_channels: 1
+num_classes: 4
+batch_size: 128
+accumulate_grad_batches: 1
+num_workers: 4
+persistent_workers: true
+pin_memory: true
+trainset_fraction: null
+valset_fraction: null
+transforms_cfg:
+  defaults:
+    - _target_: torchvision.transforms.ToTensor
+    - _target_: torchvision.transforms.Normalize
+      mean: [0.5]
+      std: [0.5]

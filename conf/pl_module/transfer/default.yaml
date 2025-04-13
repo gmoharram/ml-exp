@@ -1,0 +1,5 @@
+# Transfer learning configuration
+enabled: false
+checkpoint_path: null
+freeze_backbone: false
+reinit_head: false

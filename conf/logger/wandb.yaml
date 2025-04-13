@@ -1,0 +1,6 @@
+# WandB configuration
+project: ${task_name}_${data_module.dataset.name}
+entity: gana-moharram
+mode: offline  # 'online', 'offline', or 'disabled'
+save_dir: ${hydra:runtime.output_dir}
+name: ${pl_module.model.name}_${now:%Y%m%d_%H%M%S}  # Custom run name with model name and timestamp 

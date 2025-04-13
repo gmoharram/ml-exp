@@ -1,0 +1,29 @@
+defaults:
+  - pl_module/model: kleiner_tiny_c8
+  - pl_module/criterion: cross_entropy
+  - pl_module/optimizer: adam
+  - pl_module/scheduler: linear_warmup_cosine_decay
+  - pl_module/transfer: default
+  - data_module/dataset: dermamnist
+  - data_module/augmentations: identity
+  - trainer: default
+  - logger: wandb
+  - hydra: default
+  - _self_
+
+seed: 0
+task_name: "image_classification"
+create_data_summary: false
+create_model_summary: false
+
+hydra:
+  sweeper:
+    params:
+      data_module/dataset: organsmnist, octmnist, tissuemnist
+      pl_module/model: vit_tiny, convnext_tiny, kleiner_tiny_c4
+      data_module.dataset.batch_size: 128
+      data_module.dataset.accumulate_grad_batches: 1, 2, 4
+      pl_module.optimizer.lr: 1e-3, 3e-4
+      pl_module.optimizer.weight_decay: 0, 1e-6
+
+      

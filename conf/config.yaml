@@ -1,0 +1,27 @@
+defaults:
+  - pl_module/model: kleiner_tiny
+  - pl_module/criterion: cross_entropy
+  - pl_module/optimizer: adam
+  - pl_module/scheduler: linear_warmup_cosine_decay
+  - pl_module/transfer: default
+  - data_module/dataset: dermamnist
+  - data_module/augmentations: identity
+  - trainer: default
+  - logger: wandb
+  - hydra/default
+  - _self_ # necessary to be able to use ${task_name} in other configs
+
+create_data_summary: false
+create_model_summary: false
+seed: 0
+# rotate_fn: "replicate pad + rotate + crop"
+task_name: "image_classification"
+data_module:
+  dataset:
+    batch_size: 256
+    accumulate_grad_batches: 4
+
+pl_module:
+  optimizer:
+    lr: 4e-4
+# pl_module.scheduler.schedulers.0.T_max: 60 # assuming first scheduler is cosine

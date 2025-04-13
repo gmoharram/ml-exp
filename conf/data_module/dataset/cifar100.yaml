@@ -1,0 +1,15 @@
+_target_: src.datasets._datamodule_wrapper.DataModuleWrapper
+name: "cifar100"
+root_dir: /home/hlzl/Data/
+download: false
+image_size: 32
+in_channels: 3
+num_classes: 100
+batch_size: 128
+accumulate_grad_batches: 1
+num_workers: 4
+persistent_workers: true
+pin_memory: true
+trainset_fraction: null
+valset_fraction: null
+transforms_cfg: null

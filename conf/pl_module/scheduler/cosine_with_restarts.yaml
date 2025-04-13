@@ -1,0 +1,8 @@
+# Scheduler must be setup as a chained scheduler to allow for multiple schedulers with single config
+interval: step
+frequency: 1
+schedulers:
+  - _target_: torch.optim.lr_scheduler.CosineAnnealingWarmRestarts
+    T_0: 10 # In epochs, Take care to adapt based on max_epochs and T_mult
+    T_mult: 1
+    eta_min: 1e-6

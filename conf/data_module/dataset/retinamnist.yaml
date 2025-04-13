@@ -1,0 +1,15 @@
+_target_: datasets._datamodule_wrapper.DataModuleWrapper
+name: "retinamnist"
+root_dir: ${oc.env:HOME}/datasets/
+download: false
+image_size: 224
+in_channels: 3
+num_classes: 5
+batch_size: 128
+accumulate_grad_batches: 1
+num_workers: 4
+persistent_workers: true
+pin_memory: true
+trainset_fraction: null
+valset_fraction: null
+transforms_cfg: null

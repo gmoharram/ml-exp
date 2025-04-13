@@ -1,0 +1,21 @@
+_target_: datasets._datamodule_wrapper.DataModuleWrapper
+name: camelyon17
+root_dir: ${oc.env:HOME}/datasets/
+download: false
+image_size: 224 # original 96
+in_channels: 3
+num_classes: 2
+batch_size: 128
+accumulate_grad_batches: 1
+num_workers: 4
+persistent_workers: true
+pin_memory: true
+trainset_fraction: null
+valset_fraction: null
+
+transforms_cfg:
+  defaults:  # Default transforms that apply
+    - _target_: torchvision.transforms.ToTensor
+    - _target_: torchvision.transforms.CenterCrop
+      size: 224
+  vit: # Additional transforms for vit model

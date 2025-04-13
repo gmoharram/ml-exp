@@ -1,0 +1,23 @@
+# Trainer configuration
+trainer:
+  max_epochs: 60
+  accelerator: "cuda"
+  devices: 1
+  enable_progress_bar: true
+  log_every_n_steps: 5
+  num_sanity_val_steps: 1
+  precision: 16-mixed
+
+# Checkpoint settings
+checkpoint:
+  last:
+    dirpath: "checkpoints"
+    every_n_epochs: 1
+    filename: "model-{epoch:02d}-last"
+  accuracy:
+    dirpath: "checkpoints"
+    monitor: "val_acc"
+    mode: "max"
+    save_top_k: 1
+    every_n_epochs: 1
+    filename: "model-{epoch:02d}-{val_acc:.3f}"

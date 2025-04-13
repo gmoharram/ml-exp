@@ -1,0 +1,9 @@
+# Scheduler must be setup as a chained scheduler to allow for multiple schedulers with single config
+interval: step # Whether to step every epoch or step
+frequency: 1 # How many epochs/steps should pass between stepping
+schedulers:
+  - _target_: torch.optim.lr_scheduler.LinearLR
+    start_factor: 0.3 # warmup if start_factor < end_factor
+    end_factor: 1.0
+    total_iters: 1  # in epochs
+

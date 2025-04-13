@@ -1,0 +1,17 @@
+# Joblib launcher to run multiple jobs in parallel on the same machine
+# Doesn't currently work, weird mixing of processes by pytorch lightning but if want to setup crucial:
+# Lazy torch imports (https://github.com/facebookresearch/hydra/issues/1180)
+# If num_workers > 1, multiprocessing_context should be "fork" in dataloader (https://github.com/facebookresearch/hydra/issues/964)
+
+_target_: hydra_plugins.hydra_joblib_launcher.joblib_launcher.JoblibLauncher
+n_jobs: 2 # Change depending on VRAM capacity and requirements per job
+backend: null
+prefer: "processes"  # Use processes instead of threads
+require: null
+verbose: 0
+timeout: null
+pre_dispatch: "2*n_jobs"  # Number of batches to pre-dispatch
+batch_size: "auto"  # Automatically determine batch size
+temp_folder: null  # Use default temporary folder
+max_nbytes: null  # No limit on memory per worker
+mmap_mode: "r"  # Memory mapping mode for sharing large arrays between processes 
