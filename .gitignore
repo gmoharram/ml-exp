@@ -1,0 +1,14 @@
+datasets/qm9
+datasets/mnist
+log/
+logs
+__pycache__/
+lightning_logs/
+outputs/
+visualizations/
+wandb/
+imgs/
+.*/
+
+*.out
+commands.txt
