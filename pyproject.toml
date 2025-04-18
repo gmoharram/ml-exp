@@ -1,7 +1,7 @@
 [project]
 name = "ml-exp"
 version = "0.1.0"
-description = "Machine Learning Experiments"
+description = "Easy Setup for Flexible ML Experimentation"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
@@ -21,3 +21,11 @@ dependencies = [
     "wandb>=0.19.7",
     "wilds>=2.0.0",
 ]
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["ml_exp"]
+package-dir = {"" = "src"}
