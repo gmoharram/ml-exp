@@ -7,7 +7,7 @@ from torch.profiler import profile
 from torchinfo import summary
 
 
-def model_summary(model, input: torch.Tensor, depth=3, exec_times=False, recount_params=True:
+def model_summary(model, input: torch.Tensor, depth=3, exec_times=False, recount_params=True):
     """Profile your pytorch model with respect to parameters, FLOPS, and execution times.
     Args:
         - model: Basic pytorch module
@@ -19,13 +19,10 @@ def model_summary(model, input: torch.Tensor, depth=3, exec_times=False, recount
     """
     print("\n################# PARAMETERS #################")
     results = summary(model, input_size=input.size(), depth=depth)
-    # torchinfo accidentally recounts parameters for models using explicit weight sharing
-    # Trainable could be incorrect or even negative but kept to notice weight sharing for now.
     if recount_params:
         results.total_params = sum(p.numel() for p in model.parameters())
         results.total_param_bytes = sum(p.numel() * p.element_size() for p in model.parameters())
     print(results)
-
 
     # Get FLOPs and execution times
     print("\n################# FLOPS #################")
@@ -40,8 +37,7 @@ def model_summary(model, input: torch.Tensor, depth=3, exec_times=False, recount
     if exec_times:
         print("\n################# EXECUTION TIMES #################")
         print(prof.key_averages().table())
-
-    return results.total_params, flop_profiler.get_total_flops()
+    return results.total_params, results.total_param_bytes, results.total_output_bytes, flop_profiler.get_total_flops()
 
 def log_memory_usage(device=None):
     # Get current process

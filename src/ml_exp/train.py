@@ -8,18 +8,9 @@ import random
 import numpy as np
 import hydra
 from omegaconf import DictConfig, OmegaConf
-import torch
-import pytorch_lightning as pl
-from pytorch_lightning.callbacks import ModelCheckpoint
-from pytorch_lightning.loggers import WandbLogger
-from pytorch_lightning.callbacks import LearningRateMonitor
 import wandb
 
-from models import PLModuleWrapper
-from utils import model_summary, create_dataset_summary, TimerCallback
-
 log = logging.getLogger(__name__)
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 @hydra.main(version_base=None, config_path="../conf", config_name="config")
 def main(cfg: DictConfig) -> None:
@@ -29,6 +20,17 @@ def main(cfg: DictConfig) -> None:
     Args:
         cfg: Hydra configuration
     """
+    # Lazy import for non basic hydra 
+    import torch
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    import pytorch_lightning as pl
+    from pytorch_lightning.callbacks import ModelCheckpoint
+    from pytorch_lightning.loggers import WandbLogger
+    from pytorch_lightning.callbacks import LearningRateMonitor
+
+    from ml_exp.models import PLModuleWrapper
+    from ml_exp.utils import model_summary, create_dataset_summary, TimerCallback
+
     # Get working directory (set by Hydra)
     work_dir = Path(os.getcwd())
     log.info(f"Working directory: {work_dir}")
@@ -141,12 +143,19 @@ def main(cfg: DictConfig) -> None:
             with open(model_summary_path, "w") as f:
                 # Redirect stdout to file
                 sys.stdout = f
-                model_summary(model.to(device), dummy_input.to(device))
+                total_params, total_param_bytes, total_output_size, total_flops = model_summary(model.to(device), dummy_input.to(device))
                 # Restore stdout
                 sys.stdout = sys.__stdout__
             if wandb_logger is not None:
                 wandb.save(str(model_summary_path), base_path=str(work_dir))
-        
+                # Log model statistics to wandb
+                wandb.log({
+                    "model/total_params_millions": total_params / 1e6,
+                    "model/total_param_bytes_mb": total_param_bytes / 1e6,
+                    "model/total_output_size_mb": total_output_size / 1e6,
+                    "model/total_estimated_memory_usage_mb": (total_param_bytes + total_output_size) / 1e6,
+                    "model/total_flops_giga": total_flops / 1e9,
+                })
         # Create trainer
         log.info("Creating trainer")
 
