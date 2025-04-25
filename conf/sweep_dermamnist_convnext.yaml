@@ -13,6 +13,7 @@ defaults:
 
 seed: 0
 task_name: "image_classification"
+device_name: "non-cuda"
 create_data_summary: true
 create_model_summary: true
 

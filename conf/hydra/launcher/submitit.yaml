@@ -1,0 +1,16 @@
+defaults:
+  - submitit_slurm
+
+_target_: hydra_plugins.hydra_submitit_launcher.submitit_launcher.SlurmLauncher
+
+partition: null
+qos: null
+mem_gb: 32
+tasks_per_node: 1
+gpus_per_task: 1
+cpus_per_task: 8
+timeout_min: 2880
+max_num_timeout: 0
+
+name: ${hydra.job.name}
+submitit_folder: outputs/${now:%Y-%m-%d-%H-%M-%S}

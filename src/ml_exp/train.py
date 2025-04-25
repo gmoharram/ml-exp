@@ -31,6 +31,10 @@ def main(cfg: DictConfig) -> None:
     from ml_exp.models import PLModuleWrapper
     from ml_exp.utils import model_summary, create_dataset_summary, TimerCallback
 
+    # Add cuda device name to config before logging
+    if device.type == "cuda":
+        cfg.device_name = torch.cuda.get_device_name(0)
+
     # Get working directory (set by Hydra)
     work_dir = Path(os.getcwd())
     log.info(f"Working directory: {work_dir}")

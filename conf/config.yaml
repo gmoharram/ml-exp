@@ -11,17 +11,9 @@ defaults:
   - hydra/default
   - _self_ # necessary to be able to use ${task_name} in other configs
 
+
+seed: 0
+task_name: "image_classification"
+device_name: "non-cuda"
 create_data_summary: false
 create_model_summary: false
-seed: 0
-# rotate_fn: "replicate pad + rotate + crop"
-task_name: "image_classification"
-data_module:
-  dataset:
-    batch_size: 256
-    accumulate_grad_batches: 4
-
-pl_module:
-  optimizer:
-    lr: 4e-4
-# pl_module.scheduler.schedulers.0.T_max: 60 # assuming first scheduler is cosine
