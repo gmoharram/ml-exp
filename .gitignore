@@ -1,14 +1,8 @@
-datasets/qm9
-datasets/mnist
-log/
-logs
 __pycache__/
-lightning_logs/
+.ipynb_checkpoints/
 outputs/
-visualizations/
-wandb/
-imgs/
-.*/
+*.egg-info/
+
 
 *.out
-commands.txt
+
