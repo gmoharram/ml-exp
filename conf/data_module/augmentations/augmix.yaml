@@ -1,3 +1,4 @@
+name: 'augmix'
 augmentations_list:
   - _target_: torchvision.transforms.AugMix
     severity: 3

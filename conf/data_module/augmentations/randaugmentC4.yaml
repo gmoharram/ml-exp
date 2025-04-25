@@ -1,5 +1,8 @@
-name: 'randaugment'
+name: 'randaugmentC4'
 augmentations_list:
+  - _target_: ml_exp.utils.RandomDiscreteRotation
+    angles: [0, 90, 180, 270]
+    interpolation: 0 # nearest
   - _target_: torchvision.transforms.RandAugment
     num_ops: 2
     magnitude: 9

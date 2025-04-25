@@ -65,7 +65,8 @@ def log_memory_usage(device=None):
             gpu_memory = torch.cuda.memory_reserved(device) / (1024**2)
             print(f"GPU RAM Reserved: {gpu_memory:.2f} MB")
 
-# overestimates for 32-matmul but by same amount for all models.
+# Taken or inferred from datasheets. Not guranteed to be accurate (sparsity, mixed precision etc.) so caution with cross comparisons.
 TFLOPS_TABLE = {
-    'NVIDIA RTX A6000': {'32-true': 38.7, '32-matmul': 38.7},
+    'NVIDIA RTX A6000': {'32-true': 38.7, '32-matmul': 154.8, '16-mixed': 154.8, 'bf16-mixed': 154.8},
+    'NVIDIA A40': {'32-true': 37.4, '32-matmul': 74.8, '16-mixed': 149.7, 'bf16-mixed': 149.7},
 }
